@@ -1,2 +1,2 @@
-import { getAllPhoto } from './js/pixaday-api';
-getAllPhoto();
+// import { getAllPhoto } from './js/pixaday-api';
+// getAllPhoto();
