@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gallery</title>
-    <link rel="stylesheet" href="./css/styles.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  <title>Gallery</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
 <body>
   <form class="form">
     <div>
@@ -18,7 +18,11 @@
   <div>
     <ul class="gallery"></ul>
   </div>
-
+  <div>
+    <button type="button" class="js-btn-load hidden" data-action="load-more">
+    <span class="label">Load more</span>
+    </button>
+  </div>
   <div class="loader__container">
     <span class="loader"></span>
   </div>
