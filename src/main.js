@@ -18,50 +18,46 @@ let params = {
     per_page: 20,
 }
 
-form.addEventListener('submit', (evt) => {
-    console.log(evt)
+form.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    async function test(params) {
-        const query = evt.target.query.value.trim()
 
-        if (query === "") {
-            return alert('Fill please field');
-        }
+    const query = evt.target.query.value.trim()
 
-        params = {
-            ...params,
-            query,
-            page: 1,
-            total: []
-        }
-
-        await requestData();
-        
-        if (!params.total.length) {
-            const message = `'Sorry, there are no images matching your search query. Please try again!'`;
-            iziToast.show({
-                message,
-                iconUrl: iconError,
-                title: 'Erorr',
-                titleColor: '#fff',
-                titleSize: '16px',
-                titleLineHeight: '24px',
-                messageSize: '16px',
-                messageLineHeight: '24px',
-                messageColor: '#fff',
-                backgroundColor: ' #ef4040',
-                position: 'topRight',
-            })
-            return;
-        }
-
-        galleryImage.innerHTML = '';
-        form.reset();
-        renderGallery(params.total);
-        checkBtnStatus();
+    if (query === "") {
+        return alert('Fill please field');
     }
 
-    test();
+    params = {
+        ...params,
+        query,
+        page: 1,
+        total: []
+    }
+
+    await requestData();
+    
+    if (!params.total.length) {
+        const message = `'Sorry, there are no images matching your search query. Please try again!'`;
+        iziToast.show({
+            message,
+            iconUrl: iconError,
+            title: 'Erorr',
+            titleColor: '#fff',
+            titleSize: '16px',
+            titleLineHeight: '24px',
+            messageSize: '16px',
+            messageLineHeight: '24px',
+            messageColor: '#fff',
+            backgroundColor: ' #ef4040',
+            position: 'topRight',
+        })
+        return;
+    }
+
+    galleryImage.innerHTML = '';
+    form.reset();
+    renderGallery(params.total);
+    checkBtnStatus();
 })
 
 btnLoadMore.addEventListener('click', async () => {
