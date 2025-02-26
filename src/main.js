@@ -19,6 +19,8 @@ let params = {
 }
 
 form.addEventListener('submit', async (evt) => {
+
+    console.log(evt)
     evt.preventDefault();
 
     const query = evt.target.query.value.trim()
