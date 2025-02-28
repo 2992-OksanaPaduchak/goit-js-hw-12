@@ -15,7 +15,7 @@ let params = {
     query: '',
     page: 1,
     total: [],
-    per_page: 20,
+    per_page: 40,
 }
 
 form.addEventListener('submit', async (evt) => {
@@ -24,7 +24,8 @@ form.addEventListener('submit', async (evt) => {
     const query = evt.target.query.value.trim()
 
     if (query === "") {
-        return alert('Fill please field');
+        errorNotification('Fill please field');
+        return;
     }
 
     params = {
@@ -32,25 +33,12 @@ form.addEventListener('submit', async (evt) => {
         query,
         page: 1,
         total: []
-    }
+    };
 
     await requestData();
-    
+
     if (!params.total.length) {
-        const message = `'Sorry, there are no images matching your search query. Please try again!'`;
-        iziToast.show({
-            message,
-            iconUrl: iconError,
-            title: 'Erorr',
-            titleColor: '#fff',
-            titleSize: '16px',
-            titleLineHeight: '24px',
-            messageSize: '16px',
-            messageLineHeight: '24px',
-            messageColor: '#fff',
-            backgroundColor: ' #ef4040',
-            position: 'topRight',
-        })
+        errorNotification('Sorry, there are no images matching your search query. Please try again!');
         return;
     }
 
@@ -58,7 +46,8 @@ form.addEventListener('submit', async (evt) => {
     form.reset();
     renderGallery(params.total);
     checkBtnStatus();
-})
+
+});
 
 btnLoadMore.addEventListener('click', async () => {
 
@@ -66,7 +55,6 @@ btnLoadMore.addEventListener('click', async () => {
         ...params,
         page: params.page + 1,
     }
-
     await requestData();
 
     renderGallery(params.total);
@@ -107,17 +95,33 @@ function requestData() {
             const res = await getAllPhoto({
                 q: params.query,
                 page: params.page,
-                perPage: params.per_page
+                per_page: params.per_page
             });
 
-            params.total = res.data.hits;
-
-            loader.style.display = 'none'
-            
+            params.total = res.data.hits;            
             resolve(params.total);
         } catch (e) {
             reject(e);
-            loader.style.display = 'none'
+            showErrorMessage("Failed to load more images. Please try again later.");
+        } finally {
+            loader.style.display = 'none';
         }
     })
 }
+
+function errorNotification(message) {
+    iziToast.show({
+        message,
+        iconUrl: iconError,
+        title: 'Error',
+        titleColor: '#fff',
+        titleSize: '16px',
+        titleLineHeight: '24px',
+        messageSize: '16px',
+        messageLineHeight: '24px',
+        messageColor: '#fff',
+        backgroundColor: '#ef4040',
+        position: 'topRight',
+    });
+}
+
