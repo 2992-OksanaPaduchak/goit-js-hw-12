@@ -101,8 +101,8 @@ function requestData() {
             params.total = res.data.hits;            
             resolve(params.total);
         } catch (e) {
+           errorNotification("Failed to load images. Please try again later."); 
             reject(e);
-            showErrorMessage("Failed to load more images. Please try again later.");
         } finally {
             loader.style.display = 'none';
         }
@@ -124,4 +124,3 @@ function errorNotification(message) {
         position: 'topRight',
     });
 }
-
