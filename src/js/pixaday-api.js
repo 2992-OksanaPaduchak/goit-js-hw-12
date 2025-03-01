@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'https://pixabay.com',
+    baseURL: 'https://pixabay.com/',
     params: {
         key: '48977888-b03943cb340f5b9503aa6f8a3',
         image_type: 'photo',
@@ -12,5 +12,5 @@ const instance = axios.create({
 });
 
 export async function getAllPhoto(params) {
-    return await instance.get('/api', {params});    
+    return await instance.get('api/', {params});    
 };
